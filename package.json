@@ -9,11 +9,13 @@
 	},
 	"dependencies": {
 		"autoprefixer": "^10.2.6",
+		"humanize-duration": "^3.27.0",
 		"next": "^11.0.1",
 		"postcss": "^8.3.5",
 		"postcss-import": "^14.0.2",
 		"react": "^17.0.1",
 		"react-dom": "^17.0.2",
+		"swr": "^0.5.6",
 		"tailwindcss": "^2.2.4"
 	},
 	"devDependencies": {
@@ -25,7 +27,7 @@
 		"eslint-plugin-jsx-a11y": "^6.4.1",
 		"eslint-plugin-react": "^7.24.0",
 		"eslint-plugin-react-hooks": "^4.2.0",
-		"next-sitemap": "^1.6.124",
+		"next-sitemap": "^1.6.133",
 		"prettier": "2.3.2",
 		"stylelint": "^13.12.0",
 		"stylelint-config-standard": "^22.0.0"
