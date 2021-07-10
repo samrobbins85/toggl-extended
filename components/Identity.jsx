@@ -12,6 +12,7 @@ const fetcher = (url, token) =>
 			},
 			headers: {
 				Authorization: `Basic ${token}`,
+				"Content-Type": "application/json",
 			},
 		})
 		.then((res) => res.data);
