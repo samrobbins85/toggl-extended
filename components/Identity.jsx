@@ -19,9 +19,9 @@ import base64 from "base-64";
 // 		.then((res) => res.data);
 
 const fetcher = (url) =>
-	fetch(url, { headers: { "Content-Type": "application/json" } }).then((r) =>
-		r.json()
-	);
+	fetch(`https://api.track.toggl.com${url}`, {
+		headers: { "Content-Type": "application/json" },
+	}).then((r) => r.json());
 
 function Workspace({ workspaceList, setWorkspace }) {
 	const options = workspaceList.map((item) => {
