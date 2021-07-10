@@ -63,7 +63,9 @@ export default function Identity({ token, setToken, setWorkspace }) {
 						<button
 							className="text-white rounded px-4 red-solid red-solid-int"
 							type="button"
-							onClick={() => setToken(tempToken)}
+							onClick={() =>
+								fetcher("/api/v8/workspaces", tempToken)
+							}
 						>
 							Search
 						</button>
