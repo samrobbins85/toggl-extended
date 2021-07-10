@@ -5,18 +5,23 @@ import axios from "axios";
 import Select from "react-select";
 import base64 from "base-64";
 
-const fetcher = (url, token) =>
-	axios
-		.get(`https://api.track.toggl.com${url}`, {
-			params: {
-				user_agent: "samrobbinsgb@gmail.com",
-			},
-			headers: {
-				Authorization: `Basic ${token}`,
-				"Content-Type": "application/json",
-			},
-		})
-		.then((res) => res.data);
+// const fetcher = (url, token) =>
+// 	axios
+// 		.get(`https://api.track.toggl.com${url}`, {
+// 			params: {
+// 				user_agent: "samrobbinsgb@gmail.com",
+// 			},
+// 			headers: {
+// 				Authorization: `Basic ${token}`,
+// 				"Content-Type": "application/json",
+// 			},
+// 		})
+// 		.then((res) => res.data);
+
+const fetcher = (url) =>
+	fetch(url, { headers: { "Content-Type": "application/json" } }).then((r) =>
+		r.json()
+	);
 
 function Workspace({ workspaceList, setWorkspace }) {
 	const options = workspaceList.map((item) => {
@@ -65,7 +70,10 @@ export default function Identity({ token, setToken, setWorkspace }) {
 							className="text-white rounded px-4 red-solid red-solid-int"
 							type="button"
 							onClick={() =>
-								fetcher("/api/v8/workspaces", tempToken)
+								fetcher(
+									"/api/v8/workspaces?user_agent=samrobbinsgb@gmail.com",
+									tempToken
+								)
 							}
 						>
 							Search
