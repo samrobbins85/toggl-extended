@@ -74,6 +74,8 @@ export default function IndexPage({ er }) {
 							dates={dates}
 							clients={selectedClients}
 							setTime={setTime}
+							token={token}
+							workspace={workspace}
 						/>
 						<Rate
 							setRate={setRate}

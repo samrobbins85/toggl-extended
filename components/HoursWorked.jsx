@@ -7,18 +7,18 @@ function formatDuration(duration) {
 	const length = Duration.fromObject({ milliseconds: duration });
 	return length.toFormat("hh:mm:ss");
 }
-const fetcher = (url, start, end, clients) =>
+const fetcher = (url, start, end, clients, token, workspace) =>
 	axios
 		.get(`https://api.track.toggl.com${url}`, {
 			params: {
 				user_agent: "samrobbinsgb@gmail.com",
-				workspace_id: "3087200",
+				workspace_id: workspace,
 				since: start,
 				until: end,
 				client_ids: clients,
 			},
 			headers: {
-				Authorization: `Basic ${process.env.NEXT_PUBLIC_TOGGL_KEY}`,
+				Authorization: `Basic ${token}`,
 			},
 		})
 		.then((res) => res.data);
@@ -26,7 +26,14 @@ const fetcher = (url, start, end, clients) =>
 export default function HoursWorked({ dates, clients, setTime }) {
 	const formattedClients = clients.map((item) => item.value).toString();
 	const { data } = useSWR(
-		["/reports/api/v2/details", dates.start, dates.end, formattedClients],
+		[
+			"/reports/api/v2/details",
+			dates.start,
+			dates.end,
+			formattedClients,
+			token,
+			workspace,
+		],
 		fetcher
 	);
 	useEffect(() => {
