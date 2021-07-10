@@ -1,5 +1,6 @@
 import "../styles/index.css";
 import Head from "next/head";
+import { SWRConfig } from "swr";
 
 function MyApp({ Component, pageProps }) {
 	return (
@@ -13,8 +14,11 @@ function MyApp({ Component, pageProps }) {
 					crossOrigin="anonymous"
 				/>
 			</Head>
-
-			<Component {...pageProps} />
+			<SWRConfig
+				value={{ shouldRetryOnError: false, revalidateOnFocus: false }}
+			>
+				<Component {...pageProps} />
+			</SWRConfig>
 		</>
 	);
 }

@@ -46,6 +46,7 @@ export default function Identity({ token, setToken, setWorkspace }) {
 						<input
 							id="token"
 							type="text"
+							className="w-40"
 							onChange={(event) =>
 								setTempToken(event.target.value)
 							}
