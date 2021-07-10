@@ -1,6 +1,5 @@
 import "../styles/index.css";
 import Head from "next/head";
-import { SWRConfig } from "swr";
 
 function MyApp({ Component, pageProps }) {
 	return (
@@ -14,22 +13,8 @@ function MyApp({ Component, pageProps }) {
 					crossOrigin="anonymous"
 				/>
 			</Head>
-			<SWRConfig
-				value={{
-					fetcher: (resource) =>
-						fetch(
-							`https://api.track.toggl.com${resource}?user_agent=samrobbinsgb@gmail.com&workspace_id=3087200`,
-							{
-								headers: {
-									Authorization: `Basic ${process.env.NEXT_PUBLIC_TOGGL_KEY}`,
-								},
-							}
-						).then((res) => res.json()),
-					revalidateOnFocus: false,
-				}}
-			>
-				<Component {...pageProps} />
-			</SWRConfig>
+
+			<Component {...pageProps} />
 		</>
 	);
 }
