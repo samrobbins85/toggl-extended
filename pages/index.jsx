@@ -5,6 +5,7 @@ import useSWR from "swr";
 import { Duration } from "luxon";
 import { ClockIcon } from "@heroicons/react/outline";
 import { useState } from "react";
+import Select from "react-select";
 
 function formatDuration(duration) {
 	const length = Duration.fromObject({ milliseconds: duration });
@@ -14,8 +15,16 @@ function formatDuration(duration) {
 export default function IndexPage({ er }) {
 	const { data, error } = useSWR("/reports/api/v2/details");
 	const [rate, setRate] = useState(0);
-	// console.log(data);
-	// console.log(er);
+	const [currency, setCurrency] = useState("USD");
+	const erSort = er.sort((a, b) => a.source.localeCompare(b.source));
+
+	const options = erSort.map((item) => {
+		const myObj = {};
+		myObj.value = item.source;
+		myObj.label = item.source;
+		return myObj;
+	});
+	console.log(options);
 	return (
 		<>
 			<Head>
@@ -36,39 +45,62 @@ export default function IndexPage({ er }) {
 							<h2 className="text-xl text-center">
 								Total time worked
 							</h2>
-							<p className="text-2xl text-center flex items-center justify-center ">
+							<div className="text-2xl text-center flex items-center justify-center ">
 								<ClockIcon className="h-6 w-6 mr-2" />
 								<p>{formatDuration(data.total_grand)}</p>
-							</p>
+							</div>
 						</div>
 						<div className="bg-gray-100 p-4">
-							<h2 className="text-2xl font-semibold">
-								Hourly rate
-							</h2>
-							<p className="text-gray-700">
-								How much you make per hour, and the currency
+							<div>
+								<h2 className="text-2xl font-semibold">
+									Hourly rate
+								</h2>
+								<p className="text-gray-700">
+									How much you make per hour, and the currency
+								</p>
+							</div>
+							<form className="flex gap-x-4 items-center">
+								<input
+									type="number"
+									onChange={(input) =>
+										setRate(input.target.value)
+									}
+								/>
+								<Select
+									defaultValue={{
+										value: "USD",
+										label: "USD",
+									}}
+									className="w-40"
+									options={options}
+									onChange={(changes) =>
+										setCurrency(changes.value)
+									}
+								/>
+							</form>
+						</div>
+						<div className="bg-gray-100 p-4 text-center">
+							<h3 className="text-xl">Pay in {currency}</h3>
+							<p className="text-2xl">
+								{(
+									(data.total_grand * rate) /
+									(1000 * 60 * 60)
+								).toFixed(2)}
 							</p>
 						</div>
-						<div>
-							Pay in Dollars:{" "}
-							{(
-								(data.total_grand * rate) /
-								(1000 * 60 * 60)
-							).toFixed(2)}
+
+						<div className="bg-gray-100 p-4 text-center">
+							<h3 className="text-xl">Pay in GBP</h3>
+							<p className="text-2xl">
+								{(
+									(er.filter(
+										(item) => item.source === currency
+									)[0].rate *
+										(data.total_grand * rate)) /
+									(1000 * 60 * 60)
+								).toFixed(2)}
+							</p>
 						</div>
-						<h2>US -&gt; UK Exchange Rate</h2>
-						<p>
-							{er.filter((item) => item.source === "USD")[0].rate}
-						</p>
-						<h2>Pay in pounds</h2>
-						<p>
-							{(
-								(er.filter((item) => item.source === "USD")[0]
-									.rate *
-									(data.total_grand * rate)) /
-								(1000 * 60 * 60)
-							).toFixed(2)}
-						</p>
 					</div>
 				)}
 			</div>
