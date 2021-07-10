@@ -23,7 +23,13 @@ const fetcher = (url, start, end, clients, token, workspace) =>
 		})
 		.then((res) => res.data);
 
-export default function HoursWorked({ dates, clients, setTime }) {
+export default function HoursWorked({
+	dates,
+	clients,
+	setTime,
+	token,
+	workspace,
+}) {
 	const formattedClients = clients.map((item) => item.value).toString();
 	const { data } = useSWR(
 		[

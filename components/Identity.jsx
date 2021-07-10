@@ -2,6 +2,7 @@ import { useState } from "react";
 import useSWR from "swr";
 import axios from "axios";
 import Select from "react-select";
+import base64 from "base-64";
 
 const fetcher = (url, token) =>
 	axios
@@ -23,7 +24,10 @@ function Workspace({ workspaceList, setWorkspace }) {
 		return myObj;
 	});
 	return (
-		<Select options={options} onChange={(result) => setWorkspace(result)} />
+		<Select
+			options={options}
+			onChange={(result) => setWorkspace(result.value)}
+		/>
 	);
 }
 
@@ -48,7 +52,11 @@ export default function Identity({ token, setToken, setWorkspace }) {
 							type="text"
 							className="w-40"
 							onChange={(event) =>
-								setTempToken(event.target.value)
+								setTempToken(
+									base64.encode(
+										`${event.target.value}:api_token`
+									)
+								)
 							}
 						/>
 						<button
