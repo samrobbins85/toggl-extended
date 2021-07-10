@@ -6,29 +6,40 @@ import axios from "axios";
 import Clients from "../components/Clients";
 import DatePicker from "../components/DatePicker";
 import HoursWorked from "../components/HoursWorked";
+import Rate from "../components/Rate";
+import Earnings from "../components/Earnings";
+import Identity from "../components/Identity";
 
-const fetcher = (url) =>
+const fetcher = (url, token, workspace) =>
 	axios
 		.get(`https://api.track.toggl.com${url}`, {
 			params: {
 				user_agent: "samrobbinsgb@gmail.com",
-				workspace_id: "3087200",
+				workspace_id: workspace,
 			},
 			headers: {
-				Authorization: `Basic ${process.env.NEXT_PUBLIC_TOGGL_KEY}`,
+				Authorization: `Basic ${token}`,
 			},
 		})
 		.then((res) => res.data);
 
-export default function IndexPage() {
+export default function IndexPage({ er }) {
 	const end = new Date();
 	end.setDate(end.getDate() + 7);
-	const { data: clients } = useSWR("/api/v8/clients", fetcher);
+	const [token, setToken] = useState("");
+	const [workspace, setWorkspace] = useState("");
+	const { data: clients } = useSWR(
+		token && workspace ? ["/api/v8/clients", token, workspace] : null,
+		fetcher
+	);
 	const [selectedClients, setSelectedClients] = useState([]);
 	const [dates, setDates] = useState({
 		start: new Date().toISOString().slice(0, 10),
 		end: end.toISOString().slice(0, 10),
 	});
+	const [time, setTime] = useState(0);
+	const [rate, setRate] = useState(0);
+	const [currency, setCurrency] = useState("GBP");
 
 	return (
 		<>
@@ -45,6 +56,11 @@ export default function IndexPage() {
 				</h1>{" "}
 			</div>
 			<div className="max-w-md mx-auto py-4 grid gap-y-4">
+				<Identity
+					setToken={setToken}
+					token={token}
+					setWorkspace={setWorkspace}
+				/>
 				{clients && (
 					<Clients
 						clientList={clients}
@@ -54,8 +70,25 @@ export default function IndexPage() {
 				{!!selectedClients.length && (
 					<>
 						<DatePicker setter={setDates} />
-						<HoursWorked dates={dates} clients={selectedClients} />
+						<HoursWorked
+							dates={dates}
+							clients={selectedClients}
+							setTime={setTime}
+						/>
+						<Rate
+							setRate={setRate}
+							setCurrency={setCurrency}
+							er={er}
+						/>
 					</>
+				)}
+				{rate !== 0 && (
+					<Earnings
+						er={er}
+						currency={currency}
+						time={time}
+						rate={rate}
+					/>
 				)}
 			</div>
 		</>

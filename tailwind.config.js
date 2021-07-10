@@ -1,5 +1,6 @@
 /* eslint-disable global-require */
 const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
 
 module.exports = {
 	mode: "jit",
@@ -11,6 +12,9 @@ module.exports = {
 		extend: {
 			fontFamily: {
 				sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+			},
+			colors: {
+				orange: colors.orange,
 			},
 		},
 	},

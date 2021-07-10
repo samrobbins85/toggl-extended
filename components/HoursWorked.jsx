@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import axios from "axios";
 import { Duration } from "luxon";
+import { useEffect } from "react";
 
 function formatDuration(duration) {
 	const length = Duration.fromObject({ milliseconds: duration });
@@ -22,12 +23,17 @@ const fetcher = (url, start, end, clients) =>
 		})
 		.then((res) => res.data);
 
-export default function HoursWorked({ dates, clients }) {
+export default function HoursWorked({ dates, clients, setTime }) {
 	const formattedClients = clients.map((item) => item.value).toString();
 	const { data } = useSWR(
 		["/reports/api/v2/details", dates.start, dates.end, formattedClients],
 		fetcher
 	);
+	useEffect(() => {
+		if (data) {
+			setTime(data.total_grand / (1000 * 60 * 60));
+		}
+	}, [data]);
 	return (
 		<div className="bg-green-100 p-4 rounded text-center">
 			<h1 className="text-2xl font-semibold">Duration</h1>
