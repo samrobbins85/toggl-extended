@@ -22,7 +22,7 @@ export default function DatePicker({ setter }) {
 	}, [duration, start]);
 
 	return (
-		<div className="bg-yellow-100 rounded p-4">
+		<div className="yellow-bg rounded p-4">
 			<h2 className="text-2xl font-semibold">Dates</h2>
 			<p className="text-lg text-gray-700">
 				Select the date range you want

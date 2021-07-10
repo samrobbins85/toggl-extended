@@ -11,7 +11,7 @@ export default function Rate({ setRate, setCurrency, er }) {
 	});
 	options.push({ value: "GBP", label: "GBP" });
 	return (
-		<div className="bg-blue-100 p-4 rounded">
+		<div className="blue-bg p-4 rounded">
 			<h1 className="text-2xl font-semibold">Rate</h1>
 			<form className="flex gap-x-4 items-center">
 				<input

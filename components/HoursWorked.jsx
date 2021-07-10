@@ -35,7 +35,7 @@ export default function HoursWorked({ dates, clients, setTime }) {
 		}
 	}, [data]);
 	return (
-		<div className="bg-green-100 p-4 rounded text-center">
+		<div className="green-bg p-4 rounded text-center">
 			<h1 className="text-2xl font-semibold">Duration</h1>
 			{data && <p>{formatDuration(data.total_grand)}</p>}
 		</div>

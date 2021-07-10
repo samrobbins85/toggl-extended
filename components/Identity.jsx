@@ -34,7 +34,7 @@ export default function Identity({ token, setToken, setWorkspace }) {
 		fetcher
 	);
 	return (
-		<div className="bg-red-100 p-4 rounded">
+		<div className="p-4 rounded red-bg">
 			<h2 className="text-2xl font-semibold">Identity</h2>
 			<p className="text-lg text-gray-700">
 				Information needed to find who you are
@@ -51,7 +51,7 @@ export default function Identity({ token, setToken, setWorkspace }) {
 							}
 						/>
 						<button
-							className="bg-red-700 text-white rounded px-4 hover:bg-red-800"
+							className="text-white rounded px-4 red-solid red-solid-int"
 							type="button"
 							onClick={() => setToken(tempToken)}
 						>

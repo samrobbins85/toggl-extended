@@ -8,7 +8,7 @@ export default function Clients({ clientList, setClients }) {
 		return myObj;
 	});
 	return (
-		<div className="bg-orange-100 rounded p-4">
+		<div className="orange-bg p-4">
 			<h2 className="text-2xl font-semibold">Clients</h2>
 			<p className="text-lg text-gray-700">
 				Select the clients you want to bill for
