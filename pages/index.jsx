@@ -44,10 +44,10 @@ export default function IndexPage({ er }) {
 	return (
 		<>
 			<Head>
-				<title>Next.js Template</title>
+				<title>Toggl Extended</title>
 				<meta
 					name="Description"
-					content="My template Next.js application"
+					content="Work out how much you'll be paid"
 				/>
 			</Head>
 			<div className="pt-6 px-2">
