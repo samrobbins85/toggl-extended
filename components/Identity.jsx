@@ -34,10 +34,8 @@ function Workspace({ workspaceList, setWorkspace }) {
 
 export default function Identity({ token, setToken, setWorkspace }) {
 	const [tempToken, setTempToken] = useState("");
-	const { data } = useSWR(
-		token ? ["/api/v8/workspaces", token] : null,
-		fetcher
-	);
+	const { data, mutate } = useSWR(["/api/v8/workspaces", token], fetcher);
+
 	return (
 		<div className="p-4 rounded red-bg">
 			<h2 className="text-2xl font-semibold">Identity</h2>
@@ -63,7 +61,10 @@ export default function Identity({ token, setToken, setWorkspace }) {
 						<button
 							className="text-white rounded px-4 red-solid red-solid-int"
 							type="button"
-							onClick={() => setToken(tempToken)}
+							onClick={() => {
+								setToken(tempToken);
+								mutate();
+							}}
 						>
 							Search
 						</button>
