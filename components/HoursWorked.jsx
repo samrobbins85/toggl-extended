@@ -55,7 +55,7 @@ export default function HoursWorked({
 				Hours Worked
 			</h2>
 			{data && (
-				<p className="text-center text-xl">
+				<p className="text-center text-3xl py-2">
 					{formatDuration(data.total_grand)}
 				</p>
 			)}

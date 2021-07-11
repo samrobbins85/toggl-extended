@@ -52,7 +52,7 @@ export default function IndexPage({ er }) {
 					content="Work out how much you'll be paid"
 				/>
 			</Head>
-			<div className="pt-6 px-2">
+			<div className="pt-2 px-2">
 				<h1 className="text-center text-4xl font-semibold">
 					Toggl Extended
 				</h1>{" "}

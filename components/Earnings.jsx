@@ -13,8 +13,8 @@ export default function Earnings({ er, currency, time, rate }) {
 				<CashIcon className="h-6 w-6 mr-2" />
 				Earnings
 			</h2>
-			<p className="text-center text-xl">
-				{(exchangeRate * time * rate).toFixed(2)}
+			<p className="text-center text-3xl py-2">
+				£{(exchangeRate * time * rate).toFixed(2)}
 			</p>
 		</div>
 	);
