@@ -1,8 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Head from "next/head";
-import useSWR from "swr";
 import { useState } from "react";
-import axios from "axios";
 import Clients from "../components/Clients";
 import DatePicker from "../components/DatePicker";
 import HoursWorked from "../components/HoursWorked";
@@ -10,28 +8,11 @@ import Rate from "../components/Rate";
 import Earnings from "../components/Earnings";
 import Identity from "../components/Identity";
 
-const fetcher = (url, token, workspace) =>
-	axios
-		.get(`/toggl${url}`, {
-			params: {
-				user_agent: "samrobbinsgb@gmail.com",
-				workspace_id: workspace,
-			},
-			headers: {
-				Authorization: `Basic ${token}`,
-			},
-		})
-		.then((res) => res.data);
-
 export default function IndexPage({ er }) {
 	const end = new Date();
 	end.setDate(end.getDate() + 7);
 	const [token, setToken] = useState("");
 	const [workspace, setWorkspace] = useState("");
-	const { data: clients } = useSWR(
-		token && workspace ? ["/api/v8/clients", token, workspace] : null,
-		fetcher
-	);
 	const [selectedClients, setSelectedClients] = useState([]);
 	const [dates, setDates] = useState({
 		start: new Date().toISOString().slice(0, 10),
@@ -61,10 +42,11 @@ export default function IndexPage({ er }) {
 					token={token}
 					setWorkspace={setWorkspace}
 				/>
-				{clients && (
+				{token && workspace && (
 					<Clients
-						clientList={clients}
 						setClients={setSelectedClients}
+						token={token}
+						workspace={workspace}
 					/>
 				)}
 				{!!selectedClients.length && (
