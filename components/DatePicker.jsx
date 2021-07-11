@@ -32,11 +32,15 @@ export default function DatePicker({ setter }) {
 			<div className="flex gap-x-2 items-center">
 				<input
 					type="date"
+					className="mt-0 block px-2 border rounded border-gray-300 focus:border-select focus:ring-0"
 					value={start}
 					onChange={(data) => setStart(data.target.value)}
 				/>
 				<p>Add</p>
-				<select onChange={(item) => setDuration(item.target.value)}>
+				<select
+					className="mt-0 block w-32 px-2 border rounded border-gray-300 focus:border-select focus:ring-0"
+					onChange={(item) => setDuration(item.target.value)}
+				>
 					<option>1 Week</option>
 					<option>2 Weeks</option>
 					<option>1 Month</option>

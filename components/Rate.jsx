@@ -20,6 +20,7 @@ export default function Rate({ setRate, setCurrency, er }) {
 			<form className="flex gap-x-4 items-center pt-2">
 				<input
 					type="number"
+					className="mt-0 block w-24 px-2 border rounded border-gray-300 focus:ring-0 focus:border-select"
 					onChange={(input) => setRate(input.target.value)}
 				/>
 				<Select

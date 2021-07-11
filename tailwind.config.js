@@ -15,6 +15,7 @@ module.exports = {
 			},
 			colors: {
 				orange: colors.orange,
+				select: "#2684ff",
 			},
 		},
 	},
