@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useSWR from "swr";
 import axios from "axios";
 import Select from "react-select";
@@ -34,7 +34,51 @@ function Workspace({ workspaceList, setWorkspace }) {
 
 export default function Identity({ token, setToken, setWorkspace }) {
 	const [tempToken, setTempToken] = useState("");
+	const [loggedIn, setLoggedIn] = useState(false);
 	const { data, mutate } = useSWR(["/api/v8/workspaces", token], fetcher);
+	useEffect(() => {
+		if (token) {
+			setTempToken(token);
+		}
+		if (
+			localStorage.getItem("token") &&
+			localStorage.getItem("workspace")
+		) {
+			setLoggedIn(true);
+		}
+	}, []);
+
+	useEffect(() => {
+		if (token) {
+			setTempToken(token);
+		}
+	}, [token]);
+
+	function logOut() {
+		localStorage.clear();
+		setToken("");
+		setWorkspace("");
+		setLoggedIn(false);
+	}
+
+	if (loggedIn) {
+		return (
+			<div className="p-4 rounded red-bg">
+				<h2 className="text-2xl font-semibold">Identity</h2>
+
+				<p>You are already logged in</p>
+				<div className="justify-center flex pt-2">
+					<button
+						className="red-solid red-solid-int text-white px-4 py-2 rounded"
+						type="button"
+						onClick={logOut}
+					>
+						Log out
+					</button>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className="p-4 rounded red-bg">

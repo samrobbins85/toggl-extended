@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Clients from "../components/Clients";
 import DatePicker from "../components/DatePicker";
 import HoursWorked from "../components/HoursWorked";
@@ -21,6 +21,27 @@ export default function IndexPage({ er }) {
 	const [time, setTime] = useState(0);
 	const [rate, setRate] = useState(0);
 	const [currency, setCurrency] = useState("GBP");
+
+	useEffect(() => {
+		if (localStorage.getItem("token")) {
+			setToken(localStorage.getItem("token"));
+		}
+		if (localStorage.getItem("workspace")) {
+			setWorkspace(localStorage.getItem("workspace"));
+		}
+	}, []);
+
+	useEffect(() => {
+		if (token) {
+			localStorage.setItem("token", token);
+		}
+	}, [token]);
+
+	useEffect(() => {
+		if (workspace) {
+			localStorage.setItem("workspace", workspace);
+		}
+	}, [workspace]);
 
 	return (
 		<>
