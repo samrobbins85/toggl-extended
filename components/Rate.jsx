@@ -1,4 +1,5 @@
 import Select from "react-select";
+import { CurrencyPoundIcon } from "@heroicons/react/solid";
 
 export default function Rate({ setRate, setCurrency, er }) {
 	const erSort = er.sort((a, b) => a.source.localeCompare(b.source));
@@ -12,8 +13,11 @@ export default function Rate({ setRate, setCurrency, er }) {
 	options.push({ value: "GBP", label: "GBP" });
 	return (
 		<div className="blue-bg p-4 rounded">
-			<h1 className="text-2xl font-semibold">Rate</h1>
-			<form className="flex gap-x-4 items-center">
+			<h2 className="text-2xl font-semibold flex items-center text-radix-blue11">
+				<CurrencyPoundIcon className="h-6 w-6 mr-2" />
+				Rate
+			</h2>
+			<form className="flex gap-x-4 items-center pt-2">
 				<input
 					type="number"
 					onChange={(input) => setRate(input.target.value)}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { CalendarIcon } from "@heroicons/react/solid";
 
 export default function DatePicker({ setter }) {
 	const [duration, setDuration] = useState("1 Week");
@@ -23,10 +24,11 @@ export default function DatePicker({ setter }) {
 
 	return (
 		<div className="yellow-bg rounded p-4">
-			<h2 className="text-2xl font-semibold">Dates</h2>
-			<p className="text-lg text-gray-700">
-				Select the date range you want
-			</p>
+			<h2 className="text-2xl font-semibold flex items-center text-radix-yellow11 pb-2">
+				<CalendarIcon className="h-6 w-6 mr-2" />
+				Dates
+			</h2>
+
 			<div className="flex gap-x-2 items-center">
 				<input
 					type="date"

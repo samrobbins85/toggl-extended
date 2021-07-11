@@ -72,9 +72,6 @@ export default function Identity({ token, setToken, setWorkspace, workspace }) {
 					<IdentificationIcon className="h-6 w-6 mr-2" />
 					Identity
 				</h2>
-				<p className="text-lg text-gray-700">
-					Information needed to find who you are
-				</p>
 			</div>
 			{!loggedIn ? (
 				<div className="grid gap-y-4">

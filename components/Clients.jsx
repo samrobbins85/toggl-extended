@@ -2,6 +2,7 @@ import Select from "react-select";
 import axios from "axios";
 import useSWR from "swr";
 import { useEffect, useState } from "react";
+import { UsersIcon } from "@heroicons/react/solid";
 
 const fetcher = (url, token, workspace) =>
 	axios
@@ -34,10 +35,11 @@ export default function Clients({ setClients, token, workspace }) {
 	if (options) {
 		return (
 			<div className="orange-bg p-4">
-				<h2 className="text-2xl font-semibold">Clients</h2>
-				<p className="text-lg text-gray-700">
-					Select the clients you want to bill for
-				</p>
+				<h2 className="text-2xl font-semibold flex items-center text-radix-orange11 pb-2">
+					<UsersIcon className="h-6 w-6 mr-2" />
+					Clients
+				</h2>
+
 				<Select
 					isMulti
 					options={options}
