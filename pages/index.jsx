@@ -62,6 +62,7 @@ export default function IndexPage({ er }) {
 					setToken={setToken}
 					token={token}
 					setWorkspace={setWorkspace}
+					workspace={workspace}
 				/>
 				{token && workspace && (
 					<Clients
