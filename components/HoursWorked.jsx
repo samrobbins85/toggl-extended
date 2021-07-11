@@ -9,7 +9,7 @@ function formatDuration(duration) {
 }
 const fetcher = (url, start, end, clients, token, workspace) =>
 	axios
-		.get(`https://api.track.toggl.com${url}`, {
+		.get(`/toggl${url}`, {
 			params: {
 				user_agent: "samrobbinsgb@gmail.com",
 				workspace_id: workspace,
