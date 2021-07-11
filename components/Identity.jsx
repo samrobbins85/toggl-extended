@@ -6,7 +6,7 @@ import base64 from "base-64";
 
 const fetcher = (url, token) =>
 	axios
-		.get(`https://api.track.toggl.com${url}`, {
+		.get(`/toggl${url}`, {
 			params: {
 				user_agent: "samrobbinsgb@gmail.com",
 			},
