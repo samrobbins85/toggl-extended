@@ -80,7 +80,7 @@ export default function Identity({ token, setToken, setWorkspace, workspace }) {
 						<div className="flex gap-x-4">
 							<input
 								id="token"
-								type="text"
+								type="password"
 								className="w-40"
 								onChange={(event) =>
 									setTempToken(
