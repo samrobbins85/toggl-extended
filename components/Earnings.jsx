@@ -1,4 +1,5 @@
 import { CashIcon } from "@heroicons/react/solid";
+import getSymbolFromCurrency from "currency-symbol-map";
 
 export default function Earnings({ er, currency, time, rate }) {
 	let exchangeRate = 0;
@@ -13,6 +14,12 @@ export default function Earnings({ er, currency, time, rate }) {
 				<CashIcon className="h-6 w-6 mr-2" />
 				Earnings
 			</h2>
+			{currency !== "GBP" && (
+				<p className="text-center text-3xl py-2">
+					{getSymbolFromCurrency(currency)}
+					{(time * rate).toFixed(2)}
+				</p>
+			)}
 			<p className="text-center text-3xl py-2">
 				£{(exchangeRate * time * rate).toFixed(2)}
 			</p>
