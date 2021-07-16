@@ -55,9 +55,14 @@ export default function HoursWorked({
 				Hours Worked
 			</h2>
 			{data && (
-				<p className="text-center text-3xl py-2">
-					{formatDuration(data.total_grand)}
-				</p>
+				<>
+					<p className="text-center text-3xl py-2">
+						{(data.total_grand / (1000 * 60 * 60)).toFixed(2)} Hours
+					</p>
+					<p className="text-center text-3xl py-2">
+						{formatDuration(data.total_grand)}
+					</p>
+				</>
 			)}
 		</div>
 	);
