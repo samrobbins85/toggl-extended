@@ -1,12 +1,18 @@
 import useSWR from "swr";
 import axios from "axios";
-import { Duration } from "luxon";
 import { useEffect } from "react";
 import { ClockIcon } from "@heroicons/react/solid";
 
 function formatDuration(duration) {
-	const length = Duration.fromObject({ milliseconds: duration });
-	return length.toFormat("hh:mm:ss");
+	let seconds = Math.floor((duration / 1000) % 60);
+	let minutes = Math.floor((duration / (1000 * 60)) % 60);
+	let hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+	hours = hours < 10 ? `0${hours}` : hours;
+	minutes = minutes < 10 ? `0${minutes}` : minutes;
+	seconds = seconds < 10 ? `0${seconds}` : seconds;
+
+	return `${hours}:${minutes}:${seconds}`;
 }
 const fetcher = (url, start, end, clients, token, workspace) =>
 	axios
