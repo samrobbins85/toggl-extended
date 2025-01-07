@@ -39,7 +39,9 @@ function Workspace({ workspaceList, setWorkspace, workspace }) {
 export default function Identity({ token, setToken, setWorkspace, workspace }) {
 	const [tempToken, setTempToken] = useState("");
 	const [loggedIn, setLoggedIn] = useState(false);
-	const { data, mutate } = useSWR(["/api/v8/workspaces", token], fetcher);
+	const { data, mutate } = useSWR("/api/v9/workspaces", (url) =>
+		fetcher(url, token)
+	);
 	useEffect(() => {
 		if (token) {
 			setTempToken(token);

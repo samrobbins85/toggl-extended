@@ -4,13 +4,9 @@ import useSWR from "swr";
 import { useEffect, useState } from "react";
 import { UsersIcon } from "@heroicons/react/solid";
 
-const fetcher = (url, token, workspace) =>
+const fetcher = (url, token) =>
 	axios
 		.get(`/toggl${url}`, {
-			params: {
-				user_agent: "samrobbinsgb@gmail.com",
-				workspace_id: workspace,
-			},
 			headers: {
 				Authorization: `Basic ${token}`,
 			},
@@ -19,7 +15,9 @@ const fetcher = (url, token, workspace) =>
 
 export default function Clients({ setClients, token, workspace }) {
 	const [options, setOptions] = useState(null);
-	const { data } = useSWR(["/api/v8/clients", token, workspace], fetcher);
+	const { data } = useSWR(`/api/v9/workspaces/${workspace}/clients`, (url) =>
+		fetcher(url, token)
+	);
 	useEffect(() => {
 		if (data) {
 			setOptions(

@@ -4,9 +4,9 @@ import { useEffect } from "react";
 import { ClockIcon } from "@heroicons/react/solid";
 
 function formatDuration(duration) {
-	let seconds = Math.floor((duration / 1000) % 60);
-	let minutes = Math.floor((duration / (1000 * 60)) % 60);
-	let hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+	let seconds = Math.floor(duration % 60);
+	let minutes = Math.floor((duration / 60) % 60);
+	let hours = Math.floor((duration / (60 * 60)) % 24);
 
 	hours = hours < 10 ? `0${hours}` : hours;
 	minutes = minutes < 10 ? `0${minutes}` : minutes;
@@ -14,20 +14,21 @@ function formatDuration(duration) {
 
 	return `${hours}:${minutes}:${seconds}`;
 }
-const fetcher = (url, start, end, clients, token, workspace) =>
+const fetcher = (url, start, end, clients, token) =>
 	axios
-		.get(`/toggl${url}`, {
-			params: {
-				user_agent: "samrobbinsgb@gmail.com",
-				workspace_id: workspace,
-				since: start,
-				until: end,
+		.post(
+			`/toggl${url}`,
+			{
+				start_date: start,
+				end_date: end,
 				client_ids: clients,
 			},
-			headers: {
-				Authorization: `Basic ${token}`,
-			},
-		})
+			{
+				headers: {
+					Authorization: `Basic ${token}`,
+				},
+			}
+		)
 		.then((res) => res.data);
 
 export default function HoursWorked({
@@ -39,21 +40,27 @@ export default function HoursWorked({
 }) {
 	const formattedClients = clients.map((item) => item.value).toString();
 	const { data } = useSWR(
-		[
-			"/reports/api/v2/details",
-			dates.start,
-			dates.end,
-			formattedClients,
-			token,
-			workspace,
-		],
-		fetcher
+		`/reports/api/v3/workspace/${workspace}/projects/summary`,
+		(url) =>
+			fetcher(
+				url,
+				dates.start,
+				dates.end,
+				formattedClients,
+				token,
+				workspace
+			)
 	);
+	const processedTime =
+		data?.reduce((p, c) => p + c.tracked_seconds, 0) / (60 * 60);
 	useEffect(() => {
 		if (data) {
-			setTime(data.total_grand / (1000 * 60 * 60));
+			setTime(
+				data.reduce((p, c) => p + c.tracked_seconds, 0) / (60 * 60)
+			);
 		}
 	}, [data]);
+	console.log(data?.reduce((p, c) => p + c.tracked_seconds, 0) / (60 * 60));
 	return (
 		<div className="green-bg p-4 rounded">
 			<h2 className="text-2xl font-semibold flex items-center text-radix-green11">
@@ -63,10 +70,12 @@ export default function HoursWorked({
 			{data && (
 				<>
 					<p className="text-center text-3xl py-2">
-						{(data.total_grand / (1000 * 60 * 60)).toFixed(2)} Hours
+						{processedTime.toFixed(2)} Hours
 					</p>
 					<p className="text-center text-3xl py-2">
-						{formatDuration(data.total_grand)}
+						{formatDuration(
+							data?.reduce((p, c) => p + c.tracked_seconds, 0)
+						)}
 					</p>
 				</>
 			)}
